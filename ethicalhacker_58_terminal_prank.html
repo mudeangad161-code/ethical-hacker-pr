@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050807">
+<title>Ethical Hacker | Terminal Simulation</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: #030605; color: #8dffb0;
+    font: 14px/1.5 Consolas, Monaco, "Courier New", monospace;
+    overflow: hidden;
+  }
+  .top {
+    display:flex; justify-content:space-between; gap:12px; align-items:center;
+    padding:12px 16px; border-bottom:1px solid #174a2b; background:#07110b;
+    color:#b7ffca; letter-spacing:.08em; font-size:12px;
+  }
+  .dot { display:inline-block;width:8px;height:8px;border-radius:50%;background:#37ff79;margin-right:8px;box-shadow:0 0 10px #37ff79; }
+  .tag { color:#79a98a; }
+  main { height:calc(100vh - 44px); display:flex; flex-direction:column; padding:18px; max-width:1000px; margin:auto; }
+  .notice { color:#9aaea0; font-size:11px; margin-bottom:12px; }
+  #terminal { flex:1; overflow:hidden; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .line { margin:0 0 5px; }
+  .green { color:#6dff9b; text-shadow:0 0 8px #1a9c4d55; }
+  .blue { color:#66c9ff; }
+  .red { color:#ff6464; }
+  .yellow { color:#ffe28a; }
+  .muted { color:#678171; }
+  .bar-wrap { height:7px; background:#14251a; border:1px solid #285239; margin:14px 0 8px; }
+  #bar { height:100%; width:0%; background:linear-gradient(90deg,#20c75a,#9dffb5); box-shadow:0 0 12px #48ff82; transition:width .25s; }
+  #status { color:#9ac9a8; font-size:12px; }
+  #finish {
+    display:none; position:fixed; inset:0; background:rgba(1,5,3,.97);
+    align-items:center; justify-content:center; text-align:center; padding:24px;
+  }
+  .panel { width:min(560px,100%); border:1px solid #38db72; padding:28px 18px; box-shadow:0 0 35px #1c9e4b33; background:#061009; }
+  .eyebrow { color:#79a98a; letter-spacing:.2em; font-size:11px; }
+  h1 { color:#80ffa4; font-size:clamp(25px,7vw,42px); margin:12px 0; text-shadow:0 0 18px #37ff7966; }
+  .username { color:#69caff; font-size:clamp(20px,5vw,30px); overflow-wrap:anywhere; margin:18px 0; }
+  .sub { color:#a4b8aa; font-size:12px; }
+  button { margin-top:20px; background:#10351d; color:#a9ffc0; border:1px solid #48df78; padding:10px 16px; font:inherit; cursor:pointer; }
+  button:focus-visible { outline:2px solid white; outline-offset:3px; }
+  @media (max-width:520px) { main{padding:13px}.top{font-size:10px}#terminal{font-size:12px} }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after {scroll-behavior:auto!important;transition:none!important} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div><span class="dot"></span>ETHICAL SECURITY CONSOLE</div>
+  <div class="tag">SIMULATION MODE · OFFLINE</div>
+</header>
+<main>
+  <div class="notice">VISUAL TERMINAL DEMO — no accounts, devices, or networks are accessed.</div>
+  <section id="terminal" aria-live="polite"></section>
+  <div class="bar-wrap"><div id="bar"></div></div>
+  <div id="status">Initializing visual simulation…</div>
+</main>
+<section id="finish" aria-live="polite">
+  <div class="panel">
+    <div class="eyebrow">SIMULATION COMPLETE</div>
+    <h1>OPERATOR IDENTIFIED</h1>
+    <div class="username">@ethicalhacker_58</div>
+    <div class="sub">ETHICAL HACKER · SECURITY ENTHUSIAST</div>
+    <div class="sub" style="margin-top:18px">This was a visual terminal simulation. No access was attempted.</div>
+    <button onclick="location.reload()">RUN AGAIN</button>
+  </div>
+</section>
+<script>
+const terminal = document.getElementById('terminal');
+const bar = document.getElementById('bar');
+const status = document.getElementById('status');
+const finish = document.getElementById('finish');
+const lines = [
+  ['[BOOT] Initializing visual terminal environment…','green'],
+  ['[INFO] Loading interface modules','blue'],
+  ['[CHECK] Local animation engine: ONLINE','green'],
+  ['[SCAN] Simulated security diagnostics…','yellow'],
+  ['[DATA] 7F3A-9C21-00B8-AE41','blue'],
+  ['[TRACE] Rendering fictional network map…','green'],
+  ['[WARN] External access: DISABLED','red'],
+  ['[SAFE] No device or account connection established','green'],
+  ['[PROC] Generating random diagnostic patterns…','blue'],
+  ['[CHECK] Privacy protection: ACTIVE','green'],
+  ['[SYS] Simulation sequence running…','yellow'],
+  ['[DONE] Visual sequence completed','green']
+];
+let i = 0;
+function addLine(text, cls) {
+  const p = document.createElement('p');
+  p.className = 'line ' + cls;
+  p.textContent = text;
+  terminal.appendChild(p);
+  while (terminal.children.length > 18) terminal.removeChild(terminal.firstChild);
+}
+function tick() {
+  if (i < lines.length) {
+    addLine(lines[i][0], lines[i][1]);
+    const pct = Math.round(((i + 1) / lines.length) * 100);
+    bar.style.width = pct + '%';
+    status.textContent = 'SIMULATION PROGRESS: ' + pct + '%';
+    i++;
+    setTimeout(tick, 550 + Math.random() * 500);
+  } else {
+    setTimeout(() => { finish.style.display = 'flex'; }, 800);
+  }
+}
+tick();
+</script>
+</body>
+</html>
